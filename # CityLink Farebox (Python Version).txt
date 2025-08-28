@@ -1,0 +1,34 @@
+# CityLink Farebox (Python Version)
+
+## Overview
+CityLink Farebox is a Python application that computes metro ride charges by inferring fare rules from tap log data. The initial rules (Base Fare, Peak Period Surcharge, Transfer Window, Night Discount, and Post-Midnight Discount) are implemented as separate, toggleable classes. Each rule processes a tap event and updates the fare accordingly.
+
+## Fare Rules Hypothesis
+The following rules are applied:
+1. **BaseFareRule:** Sets a base fare of ₹25.
+2. **PeakPeriodRule:** Applies an extra surcharge during peak periods (8–10 AM and 6–8 PM).
+3. **TransferWindowRule:** Represents a placeholder for free transfers within a 30-minute window.
+4. **NightDiscountRule:** Applies a 20% discount on fares between 10 AM and midnight.
+5. **PostMidnightRule:** Applies a 35% discount on fares from midnight to 4 AM.
+
+Each rule is implemented as an independent, toggleable class, allowing for rapid A/B testing of combined fare scenarios.
+
+## Class Design
+- **TapRecord:** Encapsulates details of a tap, including datetime, metro line, station, and charged fare.
+- **FareRule (Base Class):** Defines a common interface (`apply`) for all fare rules.
+- **Concrete Fare Rules:**  
+  - BaseFareRule, PeakPeriodRule, TransferWindowRule, NightDiscountRule, PostMidnightRule.
+- **TariffEngine:** Chains the enabled rules to compute the fare for each tap log entry.
+- **Main Application:** Reads sample tap records, computes fares via TariffEngine, and prints the results.
+
+## How to Execute
+
+### Requirements
+- Python 3.6 or higher.
+
+### Run the Application
+1. Open a terminal or command prompt.
+2. Navigate to the project folder.
+3. Execute the following command:
+   ````bash
+   python CityLinkFarebox.py
